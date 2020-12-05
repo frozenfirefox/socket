@@ -1,8 +1,8 @@
 <?php
 
 
-//创建WebSocket Server对象，监听0.0.0.0:9508端口
-$ws = new Swoole\WebSocket\Server('0.0.0.0', 9508);
+//创建WebSocket Server对象，监听0.0.0.0:9509端口
+$ws = new Swoole\WebSocket\Server('0.0.0.0', 9509);
 
 //监听WebSocket连接打开事件
 $ws->on('open', function ($ws, $request) {
