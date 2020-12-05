@@ -1,0 +1,20 @@
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+
+Fatal error: Uncaught Swoole\Exception: failed to listen server port[192.168.0.200:9508], Error: Address not available[99] in /Swoole/server.php:4
+Stack trace:
+#0 /Swoole/server.php(4): Swoole\Server->__construct('192.168.0.200', 9508)
+#1 {main}
+  thrown in /Swoole/server.php on line 4
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
