@@ -1,0 +1,22 @@
+Client: Connect.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+Client: Connect.
+Client: Close.
+[2020-12-09 08:43:34 #69.4]	WARNING	Server_signal_handler: Fatal Error: manager process exit. status=0, signal=[Killed: 9]

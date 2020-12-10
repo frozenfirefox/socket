@@ -1,20 +1,142 @@
-Client: Connect.
-Client: Close.
-Client: Connect.
-Client: Close.
-Client: Connect.
-Client: Close.
+nohup: appending output to nohup.out
 
-Fatal error: Uncaught Swoole\Exception: failed to listen server port[192.168.0.200:9508], Error: Address not available[99] in /Swoole/server.php:4
+Parse error: syntax error, unexpected 'use' (T_USE), expecting ')' in /var/www/socket/server.php on line 23
+nohup: appending output to nohup.out
+
+Parse error: syntax error, unexpected 'use' (T_USE), expecting ')' in /var/www/socket/server.php on line 23
+nohup: appending output to nohup.out
+Client: Connect.
+array(1) {
+  [1001]=>
+  int(1)
+}
+
+Client: Connect.
+array(1) {
+  [1002]=>
+  int(2)
+}
+
+客户端关了Client: Close.
+客户端关了Client: Close.
+nohup: appending output to nohup.out
+Client: Connect.
+
+Fatal error: Uncaught Error: Class 'Redis' not found in /var/www/socket/server.php:15
 Stack trace:
-#0 /Swoole/server.php(4): Swoole\Server->__construct('192.168.0.200', 9508)
+#0 {main}
+  thrown in /var/www/socket/server.php on line 15
+[2020-12-10 02:43:48 *804.3]	ERROR	php_swoole_server_rshutdown (ERRNO 503): Fatal error: Uncaught Error: Class 'Redis' not found in /var/www/socket/server.php:15
+Stack trace:
+#0 {main}
+  thrown in /var/www/socket/server.php on line 15
+[2020-12-10 02:43:48 $796.0]	WARNING	check_worker_exit_status: worker#3[pid=804] abnormal exit, status=255, signal=0
+Client: Connect.
+
+Fatal error: Uncaught Error: Class 'Redis' not found in /var/www/socket/server.php:15
+Stack trace:
+#0 {main}
+  thrown in /var/www/socket/server.php on line 15
+[2020-12-10 02:43:50 *801.0]	ERROR	php_swoole_server_rshutdown (ERRNO 503): Fatal error: Uncaught Error: Class 'Redis' not found in /var/www/socket/server.php:15
+Stack trace:
+#0 {main}
+  thrown in /var/www/socket/server.php on line 15
+[2020-12-10 02:43:50 $796.0]	WARNING	check_worker_exit_status: worker#0[pid=801] abnormal exit, status=255, signal=0
+客户端关了Client: Close.
+客户端关了Client: Close.
+nohup: appending output to nohup.out
+Client: Connect.
+array(1) {
+  [0]=>
+  string(4) "1002"
+}
+
+Client: Connect.
+array(2) {
+  [0]=>
+  string(4) "1001"
+  [1]=>
+  string(4) "1002"
+}
+
+客户端关了Client: Close.
+客户端关了Client: Close.
+nohup: appending output to nohup.out
+Client: Connect.
+
+Warning: Redis::connect(): connect() failed: Connection refused in /var/www/socket/server.php on line 16
+
+Fatal error: Uncaught RedisException: Redis server went away in /var/www/socket/server.php:18
+Stack trace:
+#0 /var/www/socket/server.php(18): Redis->sAdd('set', '1002')
 #1 {main}
-  thrown in /Swoole/server.php on line 4
+  thrown in /var/www/socket/server.php on line 18
+[2020-12-10 03:33:25 *124.3]	ERROR	php_swoole_server_rshutdown (ERRNO 503): Fatal error: Uncaught RedisException: Redis server went away in /var/www/socket/server.php:18
+Stack trace:
+#0 /var/www/socket/server.php(18): Redis->sAdd('set', '1002')
+#1 {main}
+  thrown in /var/www/socket/server.php on line 18
+[2020-12-10 03:33:25 $116.0]	WARNING	check_worker_exit_status: worker#3[pid=124] abnormal exit, status=255, signal=0
 Client: Connect.
-Client: Close.
+
+Warning: Redis::connect(): connect() failed: Connection refused in /var/www/socket/server.php on line 16
+
+Fatal error: Uncaught RedisException: Redis server went away in /var/www/socket/server.php:18
+Stack trace:
+#0 /var/www/socket/server.php(18): Redis->sAdd('set', '1001')
+#1 {main}
+  thrown in /var/www/socket/server.php on line 18
+[2020-12-10 03:33:27 *121.0]	ERROR	php_swoole_server_rshutdown (ERRNO 503): Fatal error: Uncaught RedisException: Redis server went away in /var/www/socket/server.php:18
+Stack trace:
+#0 /var/www/socket/server.php(18): Redis->sAdd('set', '1001')
+#1 {main}
+  thrown in /var/www/socket/server.php on line 18
+[2020-12-10 03:33:27 $116.0]	WARNING	check_worker_exit_status: worker#0[pid=121] abnormal exit, status=255, signal=0
+客户端关了Client: Close.
+客户端关了Client: Close.
+nohup: appending output to nohup.out
 Client: Connect.
-Client: Close.
+
+Fatal error: Uncaught RedisException: NOAUTH Authentication required. in /var/www/socket/server.php:18
+Stack trace:
+#0 /var/www/socket/server.php(18): Redis->sAdd('set', '1001')
+#1 {main}
+  thrown in /var/www/socket/server.php on line 18
+[2020-12-10 03:44:11 *170.3]	ERROR	php_swoole_server_rshutdown (ERRNO 503): Fatal error: Uncaught RedisException: NOAUTH Authentication required. in /var/www/socket/server.php:18
+Stack trace:
+#0 /var/www/socket/server.php(18): Redis->sAdd('set', '1001')
+#1 {main}
+  thrown in /var/www/socket/server.php on line 18
+[2020-12-10 03:44:11 $162.0]	WARNING	check_worker_exit_status: worker#3[pid=170] abnormal exit, status=255, signal=0
 Client: Connect.
-Client: Close.
+
+Fatal error: Uncaught RedisException: NOAUTH Authentication required. in /var/www/socket/server.php:18
+Stack trace:
+#0 /var/www/socket/server.php(18): Redis->sAdd('set', '1002')
+#1 {main}
+  thrown in /var/www/socket/server.php on line 18
+[2020-12-10 03:44:13 *167.0]	ERROR	php_swoole_server_rshutdown (ERRNO 503): Fatal error: Uncaught RedisException: NOAUTH Authentication required. in /var/www/socket/server.php:18
+Stack trace:
+#0 /var/www/socket/server.php(18): Redis->sAdd('set', '1002')
+#1 {main}
+  thrown in /var/www/socket/server.php on line 18
+[2020-12-10 03:44:13 $162.0]	WARNING	check_worker_exit_status: worker#0[pid=167] abnormal exit, status=255, signal=0
+客户端关了Client: Close.
+客户端关了Client: Close.
+nohup: appending output to nohup.out
 Client: Connect.
-Client: Close.
+array(1) {
+  [0]=>
+  string(4) "1002"
+}
+
+Client: Connect.
+array(2) {
+  [0]=>
+  string(4) "1001"
+  [1]=>
+  string(4) "1002"
+}
+
+客户端关了Client: Close.
+客户端关了Client: Close.

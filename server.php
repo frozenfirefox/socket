@@ -8,14 +8,30 @@ $server->on('Connect', function ($server, $fd) {
     echo "Client: Connect.\n";
 });
 
+
+
+$func=function ($server, $fd, $from_id, $message) {
+
+    $redis = new Redis();
+	$redis->connect('47.94.167.205', 9510);
+	$auth = $redis->auth('123456');
+	$redis->sAdd('set',$message);
+
+	$list = $redis->sMembers('set');
+
+	var_dump($list);
+	echo PHP_EOL;
+    $server->send($fd, "Server嘿嘿: " . $message);
+};
+
+
+
 //监听数据接收事件
-$server->on('Receive', function ($server, $fd, $from_id, $data) {
-    $server->send($fd, "Server: " . $data);
-});
+$server->on('Receive', $func);
 
 //监听连接关闭事件
 $server->on('Close', function ($server, $fd) {
-    echo "Client: Close.\n";
+    echo "客户端关了Client: Close.\n";
 });
 
 //启动服务器
