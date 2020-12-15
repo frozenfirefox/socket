@@ -17,3 +17,9 @@ Stack trace:
 #1 {main}
   thrown in /var/www/socket/ws_server.php on line 5
 client-1 is closed
+client-1 is closed
+client-2 is closed
+client-3 is closed
+client-4 is closed
+client-5 is closed
+client-6 is closed

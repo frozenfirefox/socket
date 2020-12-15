@@ -10,18 +10,20 @@ $server->on('Connect', function ($server, $fd) {
 
 
 
+
 $func=function ($server, $fd, $from_id, $message) {
 
-    $redis = new Redis();
+    /*$redis = new Redis();
 	$redis->connect('47.94.167.205', 9510);
 	$auth = $redis->auth('123456');
 	$redis->sAdd('set',$message);
-
 	$list = $redis->sMembers('set');
-
 	var_dump($list);
-	echo PHP_EOL;
-    $server->send($fd, "Server嘿嘿: " . $message);
+	echo PHP_EOL;*/
+    $server->send($fd, "Server嘿嘿-socket: " . $message);
+
+
+
 };
 
 
