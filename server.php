@@ -16,13 +16,26 @@ $func=function ($server, $fd, $from_id, $message) {
         $reData = re_json(500, '请求参数错误');
         $server->send($fd, $reData);
     }else{
-        $redis = new Redis();
-        $redis->connect('127.0.0.1', 6379);
-        $auth = $redis->auth('123456');
-        $redis->sAdd('work_info',$message);
-        $list = $redis->sMembers('work_info');
-        $reData = re_json(200, '操作成功', $list);
-        $server->send($fd, "Server嘿嘿-socket: " . $message);
+        $params = json_decode($message, true);
+        $service = isset($params['service'])?$params['service']:'default';
+        switch ($params){
+            case SocketConst::SOCKET_RECEIVE:
+                $redis = new Redis();
+                $redis->connect('127.0.0.1', 6379);
+                $auth = $redis->auth('123456');
+                $redis->sAdd('work_info', $params);
+                $list = $redis->sMembers('work_info');
+                $reData = re_json(200, '操作成功', $list);
+                $server->send($fd,  $reData);
+                //socket route
+                break;
+            default:
+                //default
+                $reData = re_json(501, '请求接口错误');
+                $server->send($fd, $reData);
+                break;
+        }
+
     }
 };
 

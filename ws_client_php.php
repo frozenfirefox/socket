@@ -9,7 +9,7 @@
     /****************设置socket连接选项，这两个步骤你可以省略*************/
 
     //连接服务端的套接流，这一步就是使客户端与服务器端的套接流建立联系
-    if(socket_connect($socket,'127.0.0.1',9508) == false){
+    if(socket_connect($socket,'47.94.167.205',9508) == false){
         echo 'connect fail massege:'.socket_strerror(socket_last_error());
     }else{
         $message = 'This is my connect socket';
