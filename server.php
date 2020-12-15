@@ -8,7 +8,7 @@ $server = new Swoole\Server('0.0.0.0', 9508);
 
 //监听连接进入事件
 $server->on('Connect', function ($server, $fd) {
-    echo "Client: Connect.\n";
+    echo "[info]".$fd."-".date('y-m-d H:i:s')."-Client: Connect.\n";
 });
 
 $func=function ($server, $fd, $from_id, $message) {
