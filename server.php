@@ -12,7 +12,7 @@ $server->on('Connect', function ($server, $fd) {
 });
 
 $func=function ($server, $fd, $from_id, $message) {
-    if(!is_json($message)){
+    if(is_json($message) === false){
         $reData = re_json(500, '请求参数错误');
         $server->send($fd, $reData);
     }else{

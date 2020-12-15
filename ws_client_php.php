@@ -12,7 +12,10 @@
     if(socket_connect($socket,'47.94.167.205',9508) == false){
         echo 'connect fail massege:'.socket_strerror(socket_last_error());
     }else{
-        $message = 'This is my connect socket';
+        $message = json_encode([
+            'service' => 'SOCKET_SERVICE',
+            'user_id' => 1001,
+        ]);
         //转为GBK编码，处理乱码问题，这要看你的编码情况而定，每个人的编码都不同
         $message = mb_convert_encoding($message,'GBK','UTF-8');
         //向服务端写入字符串信息
