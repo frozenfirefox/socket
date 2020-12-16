@@ -60,12 +60,14 @@ websocket ip:9509
 
     /**
      * @3001
+     
      * @向手机客户端发送回复连接成功
      */
     public const SOCKET_SEND = 'socket_send';
 
     /**
      * @3003
+     * @params {"service":"socket_request","user_id":1001, "call_id": "234232", consumer_id":2323,"call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}
      * @呼叫 （工号 通话id 客户端id 被叫号码）
      */
     public const SOCKET_CALL = 'socket_call';
