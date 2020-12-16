@@ -95,7 +95,6 @@ $func=function ($server, $fd, $from_id, $message) {
                 $server->send($fd, $reData);
                 break;
         }
-
     }
 };
 

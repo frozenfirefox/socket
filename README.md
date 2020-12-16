@@ -17,8 +17,13 @@ websocket ip:9509
  -------------------------
  - ps -ef 找到php server.php 删除掉 
  - nohup php server.php 1>>socket.log
+ 
+#TCP
 
-
+````
+    HOST:47.94.167.205
+    PORT:9508
+````
 
 #api
 ````
