@@ -18,25 +18,29 @@ $func=function ($server, $fd, $from_id, $message) {
     }else{
         $params = json_decode($message, true);
         $service = isset($params['service'])?$params['service']:'default';
-        $user_id = isset($params['user_id'])?$params['user_id']:1001;
+        $user_id = isset($params['user_id'])?$params['user_id']:9999;
         $user_key = 'work_info_'.$user_id;
         $redis = new Redis();
         $redis->connect('127.0.0.1', 6379);
         $auth = $redis->auth('123456');
         switch ($service){
             case SocketConst::SOCKET_LOGIN:
+                $params['last_time'] = date('Y-m-d H:i:s');
                 $redis->set($user_key, json_encode($params));
                 $list = json_decode($redis->get($user_key), true);
                 $reData = re_json(200, '注册成功', $list);
                 $server->send($fd,  $reData);
                 //登陆接口
                 break;
-            case SocketConst::SOCKET_RECEIVE:
-                $redis->set($user_key, $params);
-                $list = $redis->sMembers('work_info');
-                $reData = re_json(200, '操作成功', $list);
+            case SocketConst::SOCKET_HEALTH:
+                $userInfo = json_decode($redis->get($user_key), true);
+                $userInfo['last_time'] = date('Y-m-d H:i:s');
+                $reData = re_json(200, '心跳检测成功', $user_key);
                 $server->send($fd,  $reData);
-                //socket route
+                //心跳检查
+                break;
+            case SocketConst::SOCKET_CALL:
+                //回掉
                 break;
             default:
                 //default
