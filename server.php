@@ -45,8 +45,28 @@ $func=function ($server, $fd, $from_id, $message) {
                 $server->send($fd,  $reData);
                 //心跳检查
                 break;
-            case SocketConst::SOCKET_CALL:
-                //回掉
+            case SocketConst::SOCKET_UPLOAD:
+                //回传话单
+                if(!$redis->get($user_key)){
+                    $reData = re_json(502, '未找到注册工号');
+                    $server->send($fd, $reData);
+                    return;
+                }
+                if(!(isset($params['record'])?:'')){
+                    $reData = re_json(503, '请上传回传话单信息');
+                    $server->send($fd, $reData);
+                    return;
+                }
+                if(!(isset($params['record']['record'])?:'')){
+                    $reData = re_json(503, '请上传回传录音信息');
+                    $server->send($fd, $reData);
+                    return;
+                }
+                $userInfo = json_decode($redis->get($user_key), true);
+                $userInfo['records'][] = $params['record'];
+                $redis->set($user_key, json_encode($userInfo));
+                $reData = re_json(200, '回传话单成功', $user_key);
+                $server->send($fd,  $reData);
                 break;
             default:
                 //default

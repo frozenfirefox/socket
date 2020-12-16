@@ -22,6 +22,22 @@
             'service' => 'socket_health',
             'user_id' => 1002,
         ]);
+        $message = json_encode([
+            'service' => 'socket_upload',
+            'user_id' => 1001,
+            'record' => [
+                'user_id' => 1001,
+                'call_id' => 232,
+                'consumer_id' => 555,
+                'call_phone' => 159232424524,
+                'time' => 232323,
+                'record' => [
+                    'user_id' => 1001,
+                    'call_id' => 232,
+                    'file' => 'sdasdsadasdsa'
+                ]
+            ],
+        ]);
         //转为GBK编码，处理乱码问题，这要看你的编码情况而定，每个人的编码都不同
         $message = mb_convert_encoding($message,'GBK','UTF-8');
         //向服务端写入字符串信息

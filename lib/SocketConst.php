@@ -21,7 +21,7 @@ class SocketConst
 
     /**
      * @1003
-     * @回传话单
+     * @回传话单（工号、通话id，客户id，被叫号码，通话结果、通话时长）
      * socket_upload
      */
     public const SOCKET_UPLOAD = 'socket_upload';
