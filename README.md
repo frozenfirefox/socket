@@ -74,6 +74,7 @@ websocket ip:9509
 
     /**
      * @4003
+     * @params {"service":"socket_result","user_id":1001,"consumer_id":2323,"call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}
      * @呼叫请求结果（工号、结果）
      */
     public const SOCKET_RESULT = 'socket_result';
