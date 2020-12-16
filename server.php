@@ -1,6 +1,7 @@
 <?php
 
 require_once "./lib/function.php";
+require_once "./lib/SocketConst.php";
 
 //创建Server对象，监听 127.0.0.1:9508 端口
 $server = new Swoole\Server('0.0.0.0', 9508);
