@@ -25,8 +25,14 @@ $func=function ($server, $fd, $from_id, $message) {
         $auth = $redis->auth('123456');
         switch ($service){
             case SocketConst::SOCKET_LOGIN:
-                $params['last_time'] = date('Y-m-d H:i:s');
-                $redis->set($user_key, json_encode($params));
+                $userInfo = $redis->get($user_key);
+                if(!$userInfo) {
+                    $userInfo = $params;
+                }
+                $userInfo['last_time'] = date('Y-m-d H:i:s');
+                $userInfo['fd'] = $fd;
+                $userInfo['alive'] = true;
+                $redis->set($user_key, json_encode($userInfo));
                 $list = json_decode($redis->get($user_key), true);
                 $reData = re_json(200, '注册成功', $list);
                 $server->send($fd,  $reData);
@@ -83,6 +89,19 @@ $server->on('Receive', $func);
 
 //监听连接关闭事件
 $server->on('Close', function ($server, $fd) {
+    $redis = new Redis();
+    $redis->connect('127.0.0.1', 6379);
+    $auth = $redis->auth('123456');
+    $keys = $redis->keys('work_info*');
+    foreach ($keys as $key){
+        $userInfo = json_decode($redis->get($key));
+        $ufd = isset($userInfo['fd'])?$userInfo['fd']:'';
+        if($ufd === $fd){
+            $userInfo['fd'] = '';
+            $redis->set($key, json_encode($userInfo));
+            break;
+        }
+    }
     echo "[info]".$fd."-".date('Y-m-d H:i:s')."-Client: Closed the connection!.\n";
 });
 
