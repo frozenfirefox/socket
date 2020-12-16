@@ -1,7 +1,6 @@
 <?php
 
-require_once "./function.php";
-require_once "./router.php";
+require_once "./lib/function.php";
 
 //创建Server对象，监听 127.0.0.1:9508 端口
 $server = new Swoole\Server('0.0.0.0', 9508);
@@ -18,12 +17,21 @@ $func=function ($server, $fd, $from_id, $message) {
     }else{
         $params = json_decode($message, true);
         $service = isset($params['service'])?$params['service']:'default';
-        switch ($params){
+        $user_id = isset($params['user_id'])?$params['user_id']:1001;
+        $user_key = 'work_info_'.$user_id;
+        $redis = new Redis();
+        $redis->connect('127.0.0.1', 6379);
+        $auth = $redis->auth('123456');
+        switch ($service){
+            case SocketConst::SOCKET_LOGIN:
+                $redis->set($user_key, json_encode($params));
+                $list = $redis->sMembers($user_key);
+                $reData = re_json(200, '注册成功', $list);
+                $server->send($fd,  $reData);
+                //登陆接口
+                break;
             case SocketConst::SOCKET_RECEIVE:
-                $redis = new Redis();
-                $redis->connect('127.0.0.1', 6379);
-                $auth = $redis->auth('123456');
-                $redis->sAdd('work_info', $params);
+                $redis->set($user_key, $params);
                 $list = $redis->sMembers('work_info');
                 $reData = re_json(200, '操作成功', $list);
                 $server->send($fd,  $reData);
