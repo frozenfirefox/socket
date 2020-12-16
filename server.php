@@ -29,8 +29,9 @@ $func=function ($server, $fd, $from_id, $message) {
                 $userInfo = $redis->get($user_key);
                 if(!$userInfo) {
                     $userInfo = $params;
+                }else{
+                    $userInfo = json_decode($userInfo, true);
                 }
-                $userInfo = json_decode($userInfo, true);
                 $userInfo['last_time'] = date('Y-m-d H:i:s', time());
                 $userInfo['fd'] = $fd;
                 $redis->set($user_key, json_encode($userInfo));
