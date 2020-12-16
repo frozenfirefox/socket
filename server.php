@@ -26,7 +26,7 @@ $func=function ($server, $fd, $from_id, $message) {
         switch ($service){
             case SocketConst::SOCKET_LOGIN:
                 $redis->set($user_key, json_encode($params));
-                $list = $redis->sMembers($user_key);
+                $list = json_decode($redis->get($user_key), true);
                 $reData = re_json(200, '注册成功', $list);
                 $server->send($fd,  $reData);
                 //登陆接口

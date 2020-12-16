@@ -1,21 +1,5 @@
 <?php
 
-require_once "./SocketConst.php";
-
-/**
- * @param $service
- */
-function route($service){
-    switch ($service){
-        case SocketConst::SOCKET_RECEIVE:
-            //socket route
-            break;
-        default:
-            //default
-            break;
-    }
-}
-
 /**
  * 判断是否是json
  * @param string $str
