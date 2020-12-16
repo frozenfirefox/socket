@@ -94,7 +94,7 @@ $server->on('Close', function ($server, $fd) {
     $auth = $redis->auth('123456');
     $keys = $redis->keys('work_info*');
     foreach ($keys as $key){
-        $userInfo = json_decode($redis->get($key));
+        $userInfo = json_decode($redis->get($key), true);
         $ufd = isset($userInfo['fd'])?$userInfo['fd']:'';
         if($ufd === $fd){
             $userInfo['fd'] = '';
