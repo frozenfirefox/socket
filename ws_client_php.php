@@ -12,8 +12,14 @@
     if(socket_connect($socket,'47.94.167.205',9508) == false){
         echo 'connect fail massege:'.socket_strerror(socket_last_error());
     }else{
+        //登陆
         $message = json_encode([
             'service' => 'socket_login',
+            'user_id' => 1001,
+            'phone' => '13312062676',
+        ]);
+        $message = json_encode([
+            'service' => 'socket_health',
             'user_id' => 1001,
         ]);
         //转为GBK编码，处理乱码问题，这要看你的编码情况而定，每个人的编码都不同

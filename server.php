@@ -35,6 +35,7 @@ $func=function ($server, $fd, $from_id, $message) {
             case SocketConst::SOCKET_HEALTH:
                 $userInfo = json_decode($redis->get($user_key), true);
                 $userInfo['last_time'] = date('Y-m-d H:i:s');
+                $redis->set($user_key, json_encode($userInfo));
                 $reData = re_json(200, '心跳检测成功', $user_key);
                 $server->send($fd,  $reData);
                 //心跳检查
