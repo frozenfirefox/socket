@@ -76,6 +76,12 @@ $func=function ($server, $fd, $from_id, $message) {
                 $reData = re_json(200, '回传话单成功', $user_key);
                 $server->send($fd,  $reData);
                 break;
+            case SocketConst::SOCKET_CALL:
+                //模拟发送任务
+                $data = '{"service":"socket_request","user_id":1001, "call_id": "234232", consumer_id":2323,"call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}';
+                $reData = re_json(200, '呼叫请求 - 并且返回结果', $data);
+                $server->send($fd,  $reData);
+                break;
             case SocketConst::SOCKET_REQUEST:
                 //呼叫请求 - 并且返回结果
                 $reData = re_json(200, '呼叫请求 - 并且返回结果', $user_key);
