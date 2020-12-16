@@ -25,13 +25,15 @@ websocket ip:9509
     /**
      * @1001
      * socket login
+     * @params {"service":"socket_login","user_id":1001,"phone" :"13312062676"}
      * 连接socket接口
      */
     public const SOCKET_LOGIN = 'socket_login';
 
     /**
      * @1002
-     * @health
+     * @health`
+     * @params {"service":"socket_health","user_id":1001,"phone" :"13312062676"}
      * socket service
      */
     public const SOCKET_HEALTH = 'socket_health';
@@ -39,6 +41,7 @@ websocket ip:9509
     /**
      * @1003
      * @回传话单（工号、通话id，客户id，被叫号码，通话结果、通话时长）
+     * @params {"service":"socket_upload","user_id":1001,"record":{"user_id":1001,"call_id":232,"consumer_id":555,"call_phone":159232424524,"time":232323,"record":{"user_id":1001,"call_id":232,"file":"sdasdsadasdsa"}}}
      * socket_upload
      */
     public const SOCKET_UPLOAD = 'socket_upload';
@@ -64,6 +67,7 @@ websocket ip:9509
 
     /**
      * @2003
+     * @params {"service":"socket_request","user_id":1001,"consumer_id":2323,"call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}
      * @系统客户端向服务端发送消息
      */
     public const SOCKET_REQUEST = 'socket_request';
