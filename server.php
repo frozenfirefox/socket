@@ -33,6 +33,11 @@ $func=function ($server, $fd, $from_id, $message) {
                 //登陆接口
                 break;
             case SocketConst::SOCKET_HEALTH:
+                if(!$redis->get($user_key)){
+                    $reData = re_json(502, '未找到注册工号');
+                    $server->send($fd, $reData);
+                    return;
+                }
                 $userInfo = json_decode($redis->get($user_key), true);
                 $userInfo['last_time'] = date('Y-m-d H:i:s');
                 $redis->set($user_key, json_encode($userInfo));

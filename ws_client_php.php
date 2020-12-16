@@ -20,7 +20,7 @@
         ]);
         $message = json_encode([
             'service' => 'socket_health',
-            'user_id' => 1001,
+            'user_id' => 1002,
         ]);
         //转为GBK编码，处理乱码问题，这要看你的编码情况而定，每个人的编码都不同
         $message = mb_convert_encoding($message,'GBK','UTF-8');
