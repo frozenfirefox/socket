@@ -61,7 +61,7 @@ function socket_client($message = [], $host = '47.94.167.205', $port = 9508){
             echo 'client write success'.PHP_EOL;
             //读取服务端返回来的套接流信息
             while($callback = socket_read($socket,1024)){
-                echo 'server return message is:'.PHP_EOL.$callback;
+                echo '[info] params: '.$message.'--server return message is:'.PHP_EOL.$callback;
             }
         }
     }
