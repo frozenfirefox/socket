@@ -7,20 +7,34 @@ require_once "./lib/SocketConst.php";
 //创建Server对象，监听 127.0.0.1:9508 端口
 $server = new Swoole\Server('0.0.0.0', 9508);
 
-$server->set([
-    'open_length_check' => true,
-    'package_max_length' => 50 * 1024 * 1024,
-    'package_length_type' => 'N',
-    'package_length_offset' => 0,
-    'package_body_offset' => 4,
-]);
+//$server->set([
+//    'open_length_check' => true,
+//    'package_max_length' => 50 * 1024 * 1024,
+//    'package_length_type' => 'N',
+//    'package_length_offset' => 0,
+//    'package_body_offset' => 4,
+//]);
 
 //监听连接进入事件
 $server->on('Connect', function ($server, $fd) {
     echo "[info]".$fd."-".date('y-m-d H:i:s')."-Client: Connect.\n";
 });
 
-$func=function ($server, $fd, $from_id, $message) {
+//监听数据接收事件
+$start = 0;
+
+$func=function ($server, $fd, $from_id, $message) use (&$start){
+    // 接收客户端的信息（手动拆包）
+    for ($i=0; $i<10; $i++){
+        //因为这里，客户端/服务端的打包/解包的方式是'n'，查看手册，
+        //是16位（占用2个字节），所以，截取0～2的字符串，再解包，就是客户端所发送数据的长度M了
+        $pack = unpack('n', substr($message, $start,2));
+        $len = $pack[1];//客户端所发送数据的长度M
+        $start = ($len + 2) * ($i+1);//维护$start，下一段数据包截取的起点
+        $message = substr($message, 2*($i+1)+$len*$i, $len);//从start～M截取数据包，获得客户端所发的完整真实的数据
+        echo '收到信息：' . $message . "\r\n";
+    }
+
     echo "[info-request]:".$message.PHP_EOL;
     if(is_json($message) === false){
         $reData = re_json(500, '请求参数错误');
