@@ -26,7 +26,7 @@ $func=function ($ws, $frame) {
         $params = json_decode($message, true);
         $service = isset($params['service'])?$params['service']:'default';
         $user_id = isset($params['user_id'])?$params['user_id']:9999;
-        $prefix = isset($params['prefix'])?$params['prefix']:'work_info_';
+        $prefix = isset($params['prefix'])?$params['prefix']:'server_info_';
         $user_key = $prefix.$user_id;
         $redis = new Redis();
         $redis->connect('127.0.0.1', 6379);
