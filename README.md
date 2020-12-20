@@ -38,7 +38,7 @@ websocket ip:9509
     /**
      * @1002
      * @health`
-     * @params {"service":"socket_health","user_id":1001,"phone" :"13312062676"}
+     * @params {"service":"socket_health","user_id":1001}
      * socket service
      */
     public const SOCKET_HEALTH = 'socket_health';
@@ -67,7 +67,7 @@ websocket ip:9509
 
     /**
      * @3003
-     * @params {"service":"socket_request","user_id":1001, "call_id": "234232", consumer_id":2323,"call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}
+     * @params {"service":"socket_call","user_id":1001, "call_id": "234232", consumer_id":2323,"call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}
      * @呼叫 （工号 通话id 客户端id 被叫号码）
      */
     public const SOCKET_CALL = 'socket_call';
