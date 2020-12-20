@@ -21,18 +21,15 @@ $server->on('Connect', function ($server, $fd) {
 });
 
 //监听数据接收事件
-$start = 0;
+$context = '';
 
-$func=function ($server, $fd, $from_id, $message) use (&$start){
-    // 接收客户端的信息（手动拆包）
-    for ($i=0; $i<10; $i++){
-        //因为这里，客户端/服务端的打包/解包的方式是'n'，查看手册，
-        //是16位（占用2个字节），所以，截取0～2的字符串，再解包，就是客户端所发送数据的长度M了
-        $pack = unpack('n', substr($message, $start,2));
-        $len = $pack[1];//客户端所发送数据的长度M
-        $start = ($len + 2) * ($i+1);//维护$start，下一段数据包截取的起点
-        $message = substr($message, 2*($i+1)+$len*$i, $len);//从start～M截取数据包，获得客户端所发的完整真实的数据
-        echo '收到信息：' . $message . "\r\n";
+$func=function ($server, $fd, $from_id, $message) use (&$context){
+    $context .= $message;
+    if(($pos = strpos($context, '\r\n\r\n')) !== false){
+        $message = str_replace('\r\n\r\n', '', $context);
+        $context = '';
+    }else{
+        return;
     }
 
     echo "[info-request]:".$message.PHP_EOL;
