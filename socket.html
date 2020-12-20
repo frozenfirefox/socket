@@ -9,6 +9,7 @@
     var wsServer = 'ws://47.94.167.205:9509';
     var websocket = new WebSocket(wsServer);
     websocket.onopen = function (evt) {
+        websocket.send('{"service":"socket_login","user_id":1003,"phone" :"13312062676"}');
         console.log("Connected to WebSocket server.");
     };
 
@@ -17,12 +18,24 @@
     };
 
     websocket.onmessage = function (evt) {
-        console.log('Retrieved data from server: ' + evt.data);
+        try{
+            let data = JSON.parse(evt.data);
+            console.log(data);
+        }catch (e) {
+            console.log(e);
+        }
     };
 
     websocket.onerror = function (evt, e) {
         console.log('Error occured: ' + evt.data);
     };
+
+    setInterval(
+        function () {
+            websocket.send('{"service":"socket_health","user_id":1003,"phone" :"13312062676"}');
+        }    ,
+        2000
+    );
 
     </script>
 </body>
