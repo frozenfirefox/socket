@@ -59,13 +59,6 @@ websocket ip:9509
      */
     public const SOCKET_CALL = 'socket_call';
 
-    /**
-     * @2003
-     * 后台websocket请求
-     * @params {"service":"socket_request","user_id":1001,"consumer_id":2323,"call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}
-     * @系统客户端向服务端发送消息
-     */
-    public const SOCKET_REQUEST = 'socket_request';
  ````
    
 #web-socket 
