@@ -21,7 +21,8 @@ $func=function ($server, $fd, $from_id, $message) {
         $params = json_decode($message, true);
         $service = isset($params['service'])?$params['service']:'default';
         $user_id = isset($params['user_id'])?$params['user_id']:9999;
-        $user_key = 'work_info_'.$user_id;
+        $prefix = isset($params['prefix'])?$params['prefix']:'work_info_';
+        $user_key = $prefix.$user_id;
         $redis = new Redis();
         $redis->connect('127.0.0.1', 6379);
         $auth = $redis->auth('123456');
@@ -86,8 +87,21 @@ $func=function ($server, $fd, $from_id, $message) {
                 break;
             case SocketConst::SOCKET_REQUEST:
                 //呼叫请求 - 并且返回结果
-                $reData = re_json(200, '呼叫请求 - 并且返回结果', $user_key);
-                $server->send($fd,  $reData);
+                //先遍历连接池，删除心跳超时的连接
+                //然后按工号查询手机客户端连接池，如果连接池中没有该工号手机客户端，则返回失败（不记录通话）
+                //否则记录话单，并以话单ID向手机客户端发起呼叫（话单id以soap请求业务服创建后获得）
+                $work_info = $redis->get('work_info_'.$params['user_id']);
+                if(strtotime($work_info['last_time']) < (time() - 6) || !$work_info['fd']){
+                    $reData = re_json(502, '未找到注册工号');
+                    $server->send($fd, $reData);
+                    return;
+                }
+
+                //这里获取话单id
+                $call_id = 1;
+                $data = '{"service":"socket_call","user_id":'.$params['user_id'].', "call_id": '.$call_id.', consumer_id":2323, "call_phone":'.$params['call_phone'].',"domain":"https:\/\/www.baidu.com"}';
+                $reData = re_json(200, '呼叫请求 - 并且返回结果', $data);
+                $server->send($work_info['fd'],  $reData);
                 break;
             case SocketConst::SOCKET_RESULT:
                 //呼叫请求 - 并且返回结果

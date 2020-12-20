@@ -57,16 +57,10 @@ websocket ip:9509
      * socket_record
      */
     public const SOCKET_RECORD = 'socket_record';
-
-    /**
-     * @3001
-     
-     * @向手机客户端发送回复连接成功
-     */
-    public const SOCKET_SEND = 'socket_send';
-
+  
     /**
      * @3003
+     * 主动模拟
      * @params {"service":"socket_call","user_id":1001, "call_id": "234232", consumer_id":2323,"call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}
      * @呼叫 （工号 通话id 客户端id 被叫号码）
      */
@@ -74,14 +68,9 @@ websocket ip:9509
 
     /**
      * @2003
+     * 后台websocket请求
      * @params {"service":"socket_request","user_id":1001,"consumer_id":2323,"call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}
      * @系统客户端向服务端发送消息
      */
     public const SOCKET_REQUEST = 'socket_request';
-
-    /**
-     * @4003
-     * @params {"service":"socket_result","user_id":1001,"consumer_id":2323,"call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}
-     * @呼叫请求结果（工号、结果）
-     */
-    public const SOCKET_RESULT = 'socket_result';
+    
