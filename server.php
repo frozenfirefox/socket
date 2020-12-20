@@ -13,6 +13,7 @@ $server->on('Connect', function ($server, $fd) {
 });
 
 $func=function ($server, $fd, $from_id, $message) {
+    echo "[info-request]:".$message.PHP_EOL;
     if(is_json($message) === false){
         $reData = re_json(500, '请求参数错误');
         $server->send($fd, $reData);
