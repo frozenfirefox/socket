@@ -7,6 +7,14 @@ require_once "./lib/SocketConst.php";
 //创建Server对象，监听 127.0.0.1:9508 端口
 $server = new Swoole\Server('0.0.0.0', 9508);
 
+$server->set([
+    'open_length_check' => true,
+    'package_max_length' => 81920,
+    'package_length_type' => 'N',
+    'package_length_offset' => 0,
+    'package_body_offset' => 4,
+]);
+
 //监听连接进入事件
 $server->on('Connect', function ($server, $fd) {
     echo "[info]".$fd."-".date('y-m-d H:i:s')."-Client: Connect.\n";
