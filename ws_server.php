@@ -102,6 +102,7 @@ $func=function ($ws, $frame) {
                     return;
                 }
 
+                socket_client();
                 //这里获取话单id
                 $call_id = 1;
                 $data = '{"service":"socket_call","user_id":'.$params['user_id'].', "call_id": '.$call_id.', consumer_id":2323, "call_phone":'.$params['call_phone'].',"domain":"https:\/\/www.baidu.com"}';

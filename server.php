@@ -9,7 +9,7 @@ $server = new Swoole\Server('0.0.0.0', 9508);
 
 $server->set([
     'open_length_check' => true,
-    'package_max_length' => 81920,
+    'package_max_length' => 50 * 1024 * 1024,
     'package_length_type' => 'N',
     'package_length_offset' => 0,
     'package_body_offset' => 4,
