@@ -74,7 +74,7 @@ $func=function ($ws, $frame) {
                 }
 
                 $result = create_call_id($params['call_phone'], $params['consumer_id'], $params['user_id']);
-                echo json_encode($result);
+//                $result = json_encode($result, true);
                 if(!($result['res']??'')){
                     $reData = re_json(503, '话单创建失败');
                     $server->push($fd, $reData);
