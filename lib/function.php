@@ -67,3 +67,22 @@ function socket_client($message = [], $host = '47.94.167.205', $port = 9508){
     }
     socket_close($socket);//工作完毕，关闭套接流
 }
+
+/**
+ * 创建话单
+ * @param $call_phone
+ * @param $consumer_id
+ * @param $user_id
+ * @return mixed
+ * @throws SoapFault
+ */
+function create_call_id($call_phone, $consumer_id, $user_id){
+    header("Content-type:text/html;charset=utf-8");
+    $LIB = new SoapClient(null, array(
+        'location'=>'http://sryd-mrt.bj01.bdysite.com/s_app_call.php',
+        'uri'=>'sryd'
+    ));
+
+    //电话号码，客户ID，工号
+    return $LIB->Insert_App_Call($call_phone,$consumer_id, $user_id);
+}

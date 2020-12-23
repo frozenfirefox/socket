@@ -101,8 +101,14 @@ $func=function ($ws, $frame) {
                     $server->push($fd, $reData);
                     return;
                 }
-
-                $call_id = 1;
+                $result = create_call_id($params['call_phone'], $params['consumer_id'], $params['user_id']);
+                echo json_encode($result);
+                if(!($result['res']??'')){
+                    $reData = re_json(503, '话单创建失败');
+                    $server->push($fd, $reData);
+                }
+                return;
+                $call_id = $result['call_id'];
                 $data = '{"service":"socket_call","user_id":'.$params['user_id'].', "call_id": '.$call_id.', consumer_id":2323, "call_phone":'.$params['call_phone'].',"domain":"https:\/\/www.baidu.com"}';
                 socket_client($data);
                 //这里获取话单id
