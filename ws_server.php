@@ -82,14 +82,14 @@ $func=function ($ws, $frame) {
                 $call_id = $result['call_id']??'';
                 $data = '{"service":"socket_call","user_id":'.$params['user_id'].', "call_id": '.$call_id.', consumer_id":2323, "call_phone":'.$params['call_phone'].',"domain":"https:\/\/www.baidu.com"}\r\n\r\n';
                 $re = socket_client($data);
-                $re = json_decode($re);
+                $re = json_decode($re, true);
                 if($re['status'] <> 200){
                     $reData = re_json(504, '发送通话失败');
                     $server->push($fd, $reData);
                 }
 
                 $reData = re_json(200, '呼叫请求 - 并且返回结果', $data);
-                $server->push($work_info['fd'],  $reData);
+                $server->push($fd,  $reData);
                 break;
             default:
                 //default
