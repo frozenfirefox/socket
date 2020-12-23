@@ -80,7 +80,7 @@ $func=function ($ws, $frame) {
                     $server->push($fd, $reData);
                 }
                 $call_id = $result['call_id']??'';
-                $data = '{"service":"socket_call","user_id":'.$params['user_id'].', "call_id": '.$call_id.', consumer_id":2323, "call_phone":'.$params['call_phone'].',"domain":"https:\/\/www.baidu.com"}';
+                $data = '{"service":"socket_call","user_id":'.$params['user_id'].', "call_id": '.$call_id.', consumer_id":2323, "call_phone":'.$params['call_phone'].',"domain":"https:\/\/www.baidu.com"}\r\n\r\n';
                 $re = socket_client($data);
                 $re = json_decode($re);
                 if($re['status'] <> 200){
