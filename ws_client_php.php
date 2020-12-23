@@ -9,7 +9,7 @@ socket_set_option($socket, SOL_SOCKET, SO_SNDTIMEO, array("sec" => 6, "usec" => 
 /****************设置socket连接选项，这两个步骤你可以省略*************/
 
 //连接服务端的套接流，这一步就是使客户端与服务器端的套接流建立联系
-if(socket_connect($socket,'47.94.167.205',9508) == false){
+if(socket_connect($socket,'47.94.167.205',9509) == false){
     echo 'connect fail massege:'.socket_strerror(socket_last_error());
 }else{
     //登陆
@@ -39,8 +39,8 @@ if(socket_connect($socket,'47.94.167.205',9508) == false){
     $message = json_encode([
         'service' => 'socket_request',
         'user_id' => 1001,
-        'consumer_id' => 2323,
-        'call_phone' => 13312062424,
+        'consumer_id' => 10101,
+        'call_phone' => 13312062676,
         'domain' => 'https://www.baidu.com'
     ]);
     //转为GBK编码，处理乱码问题，这要看你的编码情况而定，每个人的编码都不同

@@ -32,6 +32,7 @@ function re_json($code = 200, $message = 'ok', $arr = []){
  * @param array $message
  * @param string $host
  * @param int $port
+ * @return false|string
  */
 function socket_client($message = [], $host = '47.94.167.205', $port = 9508){
     //创建一个socket套接流
@@ -45,7 +46,7 @@ function socket_client($message = [], $host = '47.94.167.205', $port = 9508){
 
 //连接服务端的套接流，这一步就是使客户端与服务器端的套接流建立联系
     if(socket_connect($socket,$host,$port) == false){
-        echo 'connect fail massege:'.socket_strerror(socket_last_error());
+        return  re_json(401, 'connect fail massege:'.socket_strerror(socket_last_error()));;
     }else{
         //登陆
         $message = json_encode($message);
@@ -55,17 +56,17 @@ function socket_client($message = [], $host = '47.94.167.205', $port = 9508){
         //向服务端写入字符串信息
 
         if(socket_write($socket,$message,strlen($message)) == false){
-            echo 'fail to write'.socket_strerror(socket_last_error());
-
+            return re_json(401, 'fail to write'.socket_strerror(socket_last_error()));;
         }else{
-            echo 'client write success'.PHP_EOL;
             //读取服务端返回来的套接流信息
             while($callback = socket_read($socket,1024)){
-                echo '[info] params: '.$message.'--server return message is:'.PHP_EOL.$callback;
+                echo '操作成功-';
             }
         }
     }
     socket_close($socket);//工作完毕，关闭套接流
+
+    return re_json(200, '操作成功', json_decode($callback));;
 }
 
 /**

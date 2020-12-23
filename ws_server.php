@@ -60,68 +60,36 @@ $func=function ($ws, $frame) {
                 $server->push($fd,  $reData);
                 //心跳检查
                 break;
-            case SocketConst::SOCKET_UPLOAD:
-                //回传话单
-                if(!$redis->get($user_key)){
-                    $reData = re_json(502, '未找到注册工号');
-                    $server->push($fd, $reData);
-                    return;
-                }
-                if(!(isset($params['record'])?:'')){
-                    $reData = re_json(503, '请上传回传话单信息');
-                    $server->push($fd, $reData);
-                    return;
-                }
-                if(!(isset($params['record']['record'])?:'')){
-                    $reData = re_json(503, '请上传回传录音信息');
-                    $server->push($fd, $reData);
-                    return;
-                }
-                $userInfo = json_decode($redis->get($user_key), true);
-                $userInfo['records'][] = $params['record'];
-                $redis->set($user_key, json_encode($userInfo));
-                $reData = re_json(200, '回传话单成功', $user_key);
-                $server->push($fd,  $reData);
-                break;
-            case SocketConst::SOCKET_CALL:
-                //模拟发送任务
-                $data = '{"service":"socket_call","user_id":1002, "call_id": "234232", consumer_id":2323, "call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}';
-                $data = $params;
-                $reData = re_json(200, '呼叫请求 - 并且返回结果', $data);
-                $server->push($fd,  $reData);
-                break;
             case SocketConst::SOCKET_REQUEST:
                 //呼叫请求 - 并且返回结果
                 //先遍历连接池，删除心跳超时的连接
                 //然后按工号查询手机客户端连接池，如果连接池中没有该工号手机客户端，则返回失败（不记录通话）
                 //否则记录话单，并以话单ID向手机客户端发起呼叫（话单id以soap请求业务服创建后获得）
                 $work_info = $redis->get('work_info_'.$params['user_id']);
-                if(strtotime($work_info['last_time']) < (time() - 6) || !$work_info['fd']){
+                $work_info = $work_info?json_decode($work_info, true):'';
+                if(!$work_info || strtotime($work_info['last_time']) < (time() - 6) || !$work_info['fd']){
                     $reData = re_json(502, '未找到注册工号');
                     $server->push($fd, $reData);
                     return;
                 }
+
                 $result = create_call_id($params['call_phone'], $params['consumer_id'], $params['user_id']);
                 echo json_encode($result);
                 if(!($result['res']??'')){
                     $reData = re_json(503, '话单创建失败');
                     $server->push($fd, $reData);
                 }
-                return;
-                $call_id = $result['call_id'];
+                $call_id = $result['call_id']??'';
                 $data = '{"service":"socket_call","user_id":'.$params['user_id'].', "call_id": '.$call_id.', consumer_id":2323, "call_phone":'.$params['call_phone'].',"domain":"https:\/\/www.baidu.com"}';
-                socket_client($data);
-                //这里获取话单id
+                $re = socket_client($data);
+                $re = json_decode($re);
+                if($re['status'] <> 200){
+                    $reData = re_json(504, '发送通话失败');
+                    $server->push($fd, $reData);
+                }
+
                 $reData = re_json(200, '呼叫请求 - 并且返回结果', $data);
                 $server->push($work_info['fd'],  $reData);
-                break;
-            case SocketConst::SOCKET_RESULT:
-                //呼叫请求 - 并且返回结果
-                //先遍历连接池，删除心跳超时的连接
-                //然后按工号查询手机客户端连接池，如果连接池中没有该工号手机客户端，则返回失败（不记录通话）
-                //否则记录话单，并以话单ID向手机客户端发起呼叫（话单id以soap请求业务服创建后获得）
-                $reData = re_json(200, '先遍历连接池，删除心跳超时的连接,然后按工号查询手机客户端连接池，如果连接池中没有该工号手机客户端，则返回失败（不记录通话）,否则记录话单，并以话单ID向手机客户端发起呼叫（话单id以soap请求业务服创建后获得）', $user_key);
-                $server->push($fd,  $reData);
                 break;
             default:
                 //default

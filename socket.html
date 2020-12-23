@@ -30,9 +30,16 @@
         console.log('Error occured: ' + evt.data);
     };
 
-    setInterval(
+    // setInterval(
+    //     function () {
+    //         websocket.send('{"service":"socket_health","user_id":1003,"phone" :"13312062676"}');
+    //     }    ,
+    //     2000
+    // );
+
+    setTimeout(
         function () {
-            websocket.send('{"service":"socket_health","user_id":1003,"phone" :"13312062676"}');
+            websocket.send('{"service":"socket_request","user_id":1003,"call_phone":"13312062676","consumer_id":"10101"}');
         }    ,
         2000
     );
