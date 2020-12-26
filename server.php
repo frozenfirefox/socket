@@ -25,13 +25,16 @@ $context = '';
 
 $func=function ($server, $fd, $from_id, $message) use (&$context){
     $context .= $message;
-    if(($pos = strpos($context, "\r\n\r\n")) !== false){
+    echo '[test]:'.$context;
+    if(($pos = strpos($context, "\r\n\r\n")) !== false || ($pos = strpos($context, '\r\n\r\n')) !== false){
+        echo '[pos]:'.$context;
         $message = str_replace('\r\n\r\n', '', $context);
         $context = '';
     }else{
         return;
     }
-
+    
+    echo '[sell]:'.is_json($message);
     echo "[info-request]:".$message.PHP_EOL;
     if(is_json($message) === false){
         $reData = re_json(500, '请求参数错误');
@@ -101,6 +104,9 @@ $func=function ($server, $fd, $from_id, $message) use (&$context){
                 //模拟发送任务
                 $data = '{"service":"socket_call","user_id":1002, "call_id": "234232", consumer_id":2323, "call_phone":13312062424,"domain":"https:\/\/www.baidu.com"}';
                 $data = $params;
+                $fd = $data['fd'];
+                unset($data['fd']);
+                echo '[call]:'$fd.var_export($data);
                 $reData = re_json(200, '呼叫请求 - 并且返回结果', $data);
                 $server->send($fd,  $reData);
                 break;

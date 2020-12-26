@@ -67,7 +67,7 @@ $func=function ($ws, $frame) {
                 //否则记录话单，并以话单ID向手机客户端发起呼叫（话单id以soap请求业务服创建后获得）
                 $work_info = $redis->get('work_info_'.$params['user_id']);
                 $work_info = $work_info?json_decode($work_info, true):'';
-                if(!$work_info || strtotime($work_info['last_time']) < (time() - 6) || !$work_info['fd']){
+                if(!$work_info || !$work_info['fd']){
                     $reData = re_json(502, '未找到注册工号');
                     $server->push($fd, $reData);
                     return;
@@ -80,7 +80,8 @@ $func=function ($ws, $frame) {
                     $server->push($fd, $reData);
                 }
                 $call_id = $result['call_id']??'';
-                $data = '{"service":"socket_call","user_id":'.$params['user_id'].', "call_id": '.$call_id.', consumer_id":2323, "call_phone":'.$params['call_phone'].',"domain":"https:\/\/www.baidu.com"}\r\n\r\n';
+                $data = '{"service":"socket_call","user_id":'.$params['user_id'].', "call_id": '.$call_id.', "consumer_id":2323, "call_phone":'.$params['call_phone'].',"domain":"https:\/\/www.baidu.com", "fd": '.$work_info['fd'].'}\r\n\r\n';
+                echo '[call]:'.$data;
                 $re = socket_client($data);
                 $re = json_decode($re, true);
                 if($re['status'] <> 200){
