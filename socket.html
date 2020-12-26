@@ -77,15 +77,16 @@
                     console.log('Error occured: ' + evt.data);
                 };
 
-                // setInterval(
-                //     function () {
-                //         websocket.send('{"service":"socket_health","user_id":1003,"phone" :"13312062676"}');
-                //     }    ,
-                //     2000
-                // );
+                setInterval(
+                    function () {
+                        websocket.send('{"service":"socket_health","user_id":1003,"phone" :"13312062676"}');
+                    }    ,
+                    2000
+                );
             },
             show: function (key) {
-                this.ws.send('{"service":"socket_request","user_id":"'+this.list[key].user_id+'","call_phone":"'+this.list[key].call_phone+'","consumer_id":"'+this.list[key].consumer_id+'"}');
+                let list = JSON.parse(this.list);
+                this.ws.send('{"service":"socket_request","user_id":"'+list[key].user_id+'","call_phone":"'+list[key].call_phone+'","consumer_id":"'+list[key].consumer_id+'"}');
             }
         }
     })
