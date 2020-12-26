@@ -25,7 +25,7 @@ $context = '';
 
 $func=function ($server, $fd, $from_id, $message) use (&$context){
     $context .= $message;
-    if(($pos = strpos($context, '\r\n\r\n')) !== false){
+    if(($pos = strpos($context, "\r\n\r\n")) !== false){
         $message = str_replace('\r\n\r\n', '', $context);
         $context = '';
     }else{
