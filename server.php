@@ -106,9 +106,10 @@ $func=function ($server, $fd, $from_id, $message) use (&$context){
                 $data = $params;
                 $fd = $data['fd'];
                 unset($data['fd']);
-                echo '[call]:'$fd.var_export($data);
-                $reData = re_json(200, '呼叫请求 - 并且返回结果', $data);
-                $server->send($fd,  $reData);
+                echo '[call]:'.$fd.var_export($data);
+		$server->send($fd, json_encode($data));
+                //$reData = re_json(200, '呼叫请求 - 并且返回结果', $data);
+                //$server->send($fd,  $reData);
                 break;
             case SocketConst::SOCKET_REQUEST:
                 //呼叫请求 - 并且返回结果
