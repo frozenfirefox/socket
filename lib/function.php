@@ -49,7 +49,7 @@ function socket_client($message = [], $host = '47.94.167.205', $port = 9508){
         return  re_json(401, 'connect fail massege:'.socket_strerror(socket_last_error()));;
     }else{
         //登陆
-        $message = json_encode($message);
+        // $message = json_encode($message);
 
         //转为GBK编码，处理乱码问题，这要看你的编码情况而定，每个人的编码都不同
         $message = mb_convert_encoding($message,'GBK','UTF-8');
